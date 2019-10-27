@@ -12,7 +12,8 @@ namespace Launcher
     {
         private static void Main()
         {
-            Console.WriteLine("Starting Game.");
+            Debug.Log("Starting Game.");
+            
             using (var game = new Game())
             {
                 EngineReferences.Game = game;
@@ -20,10 +21,13 @@ namespace Launcher
                 var player = new Entity("Player");
                 
                 Sprite sprite = new Sprite("Content/Sprites/table.png");
+                KeyboardController controller = new KeyboardController(){ Speed= 15 };
+                
                 player.AddComponent(sprite);
+                player.AddComponent(controller);
                 
                 player.Transform.Position = new Vector2(50,50);
-                player.Transform.Size = new Vector2(20,20);
+                player.Transform.Size = new Vector2(100,100);
                 
                 game.AddEntity(player);
                 game.Run();
