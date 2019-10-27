@@ -14,6 +14,9 @@ namespace Engine
         internal SpriteBatch SpriteBatch { get; set; }
         
         private List<Entity> _entities;
+        private bool _loaded = false;
+
+        public int EntityCount => _entities.Count;
         
         public Game()
         {
@@ -34,6 +37,8 @@ namespace Engine
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             foreach (var entity in _entities) entity.Load();
+
+            _loaded = true;
         }
         protected override void UnloadContent()
         {
@@ -45,9 +50,9 @@ namespace Engine
                 Exit();
             }
 
-            foreach (var entity in _entities.Where(x => x.Enabled))
+            for (var i = _entities.Count - 1; i >= 0; i--)
             {
-                entity.Update(dt);
+                _entities[i].Update(dt);
             }
             
             base.Update(dt);
@@ -56,9 +61,9 @@ namespace Engine
         {
             GraphicsDevice.Clear(Color.LightBlue);
 
-            foreach (var entity in _entities.Where(x => x.Enabled))
+            for (var i = _entities.Count - 1; i >= 0; i--)
             {
-                entity.Draw(dt);
+                _entities[i].Draw(dt);
             }
             
             base.Draw(dt);
@@ -66,10 +71,14 @@ namespace Engine
         #endregion
         
         #region Public Methods
-        public void AddEntity(Entity entity)
+        public Entity AddEntity(Entity entity)
         {
             Debug.Log($"Adding entity : {entity}");
+            
+            if (_loaded) entity.Load(); // Loading entity if game already loaded.
+            
             _entities.Add(entity);
+            return entity;
         }
         public void RemoveEntity(Entity entity)
         {

@@ -21,9 +21,10 @@ namespace Engine
         public bool Enabled { get; set; }
 
         public List<Component> Components = new List<Component>();
-
         public Transform Transform { get; }
 
+        private bool _loaded = false;
+        
         #region Constructors
 
         public Entity(string name = "Unnamed Entity", params Type[] comps)
@@ -49,6 +50,8 @@ namespace Engine
             {
                 comp.Load();
             }
+
+            _loaded = true;
         }
 
         public virtual void Update(GameTime dt)
@@ -68,6 +71,9 @@ namespace Engine
         public Component AddComponent(Component comp)
         {
             comp.Entity = this;
+            
+            if (_loaded) comp.Load(); // Loading component if entity already loaded.
+            
             Debug.Log($"Adding component : {comp} on entity : {ToString()}");
             Components.Add(comp);
             return comp;
