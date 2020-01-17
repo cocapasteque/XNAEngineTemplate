@@ -25,6 +25,7 @@ namespace Launcher
                 
                 player.AddComponent(sprite);
                 player.AddComponent(controller);
+                player.AddComponent(new RigidBody());
                 
                 player.Transform.Position = new Vector2(50,50);
                 player.Transform.Size = new Vector2(100,100);

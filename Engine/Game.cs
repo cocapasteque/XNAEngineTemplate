@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Engine.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -17,7 +18,7 @@ namespace Engine
         private bool _loaded = false;
 
         public int EntityCount => _entities.Count;
-        
+        public List<Entity> RbEntities => _entities.Where(x => x.Components.Any(y => y.GetType() == typeof(RigidBody))).ToList();
         public Game()
         {
             GraphicsDeviceManager = new GraphicsDeviceManager(this)
@@ -25,6 +26,8 @@ namespace Engine
                 PreferMultiSampling = false
             };
            _entities = new List<Entity>();
+           
+           PhysicEngine.Game = this;
         }
         
         #region Engine Logic
@@ -45,6 +48,8 @@ namespace Engine
         }
         protected override void Update(GameTime dt)
         {
+            PhysicEngine.BeforeUpdate();
+            
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();
@@ -56,6 +61,8 @@ namespace Engine
             }
             
             base.Update(dt);
+            
+            PhysicEngine.AfterUpdate();
         }
         protected override void Draw(GameTime dt)
         {
@@ -67,6 +74,8 @@ namespace Engine
             }
             
             base.Draw(dt);
+            
+            
         }
         #endregion
         

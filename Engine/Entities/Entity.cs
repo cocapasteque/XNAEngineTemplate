@@ -85,6 +85,11 @@ namespace Engine
             return AddComponent(instance);
         }
 
+        public T GetComponent<T>() where T : Component
+        {
+            return (T) Components.FirstOrDefault(x => x.GetType() == typeof(T));
+        }
+        
         #endregion
 
         

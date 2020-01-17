@@ -43,12 +43,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Debug\Debug.cs" />
+    <Compile Include="Debug\FramCounter.cs" />
     <Compile Include="EngineReferences.cs" />
     <Compile Include="Entities\Component.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\RigidBody.cs" />
     <Compile Include="Entities\Transform.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Graphics\Sprite.cs" />
+    <Compile Include="Physics\PhysicEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Button.cs" />
   </ItemGroup>
